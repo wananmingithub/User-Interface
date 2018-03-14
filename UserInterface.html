@@ -1,0 +1,609 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+
+<style>
+.container {
+    position: relative;
+    color:#808080;
+	background-color:black;
+}
+.top-right {
+    position: absolute;
+    top: 80px;
+    right: 16px;
+    width: 150px;
+    height: 100px;
+    padding: 15px;
+    background-color: black;
+    box-shadow: 10px 10px 100px grey;
+}
+.bottom-left {
+    position: absolute;
+    bottom: 80px;
+    left: 16px;
+    width: 300px;
+    height: 100px;
+    padding: 15px;
+    background-color: black;
+    box-shadow: 10px 10px 100px grey;
+}
+html{
+    width:100%;
+    height:100%;
+	}
+body {
+    font-family: "Lato", sans-serif;
+	width:100%;
+    height:100%;
+    background-color:#DDD;
+}
+.hide {
+  display: none;
+}
+p {
+  font-weight: bold;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:black;
+	color:#808080;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right:0;
+    font-size: 36px;
+    margin-left: 10px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px
+	background-color:black;
+
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+<script>
+function show(){
+  document.getElementById('div2').style.display = 'none';
+  document.getElementById('div1').style.display ='none';
+  document.getElementById('div5').style.display ='none';
+}
+function show1(){
+  document.getElementById('div1').style.display ='block';
+  document.getElementById('div2').style.display = 'none';
+  document.getElementById('div5').style.display ='none';
+}
+function show2(){
+  document.getElementById('div2').style.display = 'block';
+  document.getElementById('div1').style.display ='none';
+  document.getElementById('div5').style.display ='none';
+}
+function show3(){
+  document.getElementById('div2').style.display = 'block';
+  document.getElementById('div1').style.display ='block';
+  document.getElementById('div5').style.display ='none';
+}
+function show4(){
+  document.getElementById('div2').style.display = 'block';
+  document.getElementById('div1').style.display ='block';
+  document.getElementById('div5').style.display ='none';
+}
+function show5(){
+  document.getElementById('div2').style.display = 'none';
+  document.getElementById('div1').style.display ='none';
+  document.getElementById('div5').style.display ='block';
+}
+function show6(){
+  document.getElementById('div2').style.display = 'none';
+  document.getElementById('div1').style.display ='none';
+  document.getElementById('div5').style.display ='none';
+}
+</script>
+</head>
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+ </span><font color="Yellow">Time Window</font></span>
+	<form action="#" class="ws-validate">
+      From:
+      <div class="form-row">
+          <input type="date" data-date-size="4" />
+      </div>
+	</form>
+	<form action="#" class="ws-validate">
+      To:
+      <div class="form-row">
+          <input type="date" data-date-size="4" />
+      </div>
+	</form>
+	<br>
+	<hr>
+	</span><font color="Yellow">FIR Filter</font></span>
+	<br>
+  <input type="radio" name="geoloc" value="asean" checked onclick="show6();"  />
+	ASEAN <br>
+	<input type="radio" name="geoloc" value="fir" onclick="show5();" />
+	FIR <br>
+  <div id="div5" class="hide">
+    Select FIR:
+            <select id="select">
+                <option value="default">default</option>
+            </select>
+            <script>
+                function getFIRs()
+    			{
+    				var obj = JSON.parse('{ "firs":["RPHI", "VDPP"]}');
+    				return document.getElementById("select").innerHTML = obj.firs;
+    			}
+                var select = document.getElementById("select"),
+                arr = getFIRs();
+                 for(var i = 0; i < arr.length; i++)
+                 {
+                     var option = document.createElement("OPTION"),
+                         txt = document.createTextNode(arr[i]);
+                     option.appendChild(txt);
+                     option.setAttribute("value",arr[i]);
+                     select.insertBefore(option,select.lastChild);
+                 }
+            </script>
+	</div>
+  <div id="div6" class="hide">
+	</div>
+    <br>
+    <br>
+	<hr>
+    </span><font color="Yellow">Track Data Source</font></span><br>
+    <select name="track">
+      <option value="flightplan">FLIGHT PLAN</option>
+      <option value="adsb">ADSB</option>
+    </select>
+    <br>
+    <br>
+	<hr>
+    <p></span><font color="Yellow">Airport Filter</font></span></p>
+	<input type="radio" name="loc" value="one" checked onclick="show();"  />
+	None <br>
+	<input type="radio" name="loc" value="ori" onclick="show1();" />
+	Origin Only <br>
+	<input type="radio" name="loc" value="dest" onclick="show2();" />
+	Destination Only<br>
+	<input type="radio" name="loc" value="oneway" onclick="show3();" />
+	Origin to Destination(Oneway)<br>
+	<input type="radio" name="loc" value="twoway" onclick="show4();" />
+	Both ways<br>
+	<div id="div1" class="hide">
+    Select Origin Airport:<br>
+    		<select id="ori">
+                <option value="default">default</option>
+            </select>
+            <script>
+                function getoriginAirports()
+    			{
+    				var obj = JSON.parse('{ "originairports":["Singapore", "China"]}');
+    				return document.getElementById("ori").innerHTML = obj.originairports;
+    			}
+                var select = document.getElementById("ori"),
+                arr = getoriginAirports();
+                 for(var i = 0; i < arr.length; i++)
+                 {
+                     var option = document.createElement("OPTION"),
+                         txt = document.createTextNode(arr[i]);
+                     option.appendChild(txt);
+                     option.setAttribute("value",arr[i]);
+                     select.insertBefore(option,select.lastChild);
+                 }
+            </script>
+	</div>
+	<div id="div2" class="hide">
+    Select Destination Airport:<br>
+        <select id="dest">
+                <option value="default">default</option>
+            </select>
+            <script>
+                function getdestAirports()
+          {
+            var obj = JSON.parse('{ "destairports":["Singapore", "China"]}');
+            return document.getElementById("dest").innerHTML = obj.destairports;
+          }
+                var select = document.getElementById("dest"),
+                arr = getdestAirports();
+                 for(var i = 0; i < arr.length; i++)
+                 {
+                     var option = document.createElement("OPTION"),
+                         txt = document.createTextNode(arr[i]);
+                     option.appendChild(txt);
+                     option.setAttribute("value",arr[i]);
+                     select.insertBefore(option,select.lastChild);
+                 }
+            </script>
+	</div>
+    <br>
+    <br><p align="right">
+    <button type="Submit"> Submit</button> </p>
+    <br>
+    <br>
+</div>
+<div class="container">
+  <div id="main">
+  <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;<span style="color:orange">&#9992;</span><font color="Yellow">ATMRI </font><font color="Orange">F</font><font color="Yellow">light </font><font color="orange">D</font><font color="Yellow">ata</font><font color="orange"> I</font><font color="Yellow">ntelligence</font></span>
+  <div id="map" style="width:100%;height:900px;background:white"></div>
+	<script>
+    function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(0,-180),
+        zoom: 3,
+        mapTypeId: 'terrain'
+    }
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn6NQemQCGuH6xOFLrSHp8oS5LQ-p4NXk&callback=myMap"></script>
+</div>
+  <div class="top-right">
+     <input type="checkbox" id="nofilt" onClick="display()"><font color="yellow">None</font><br>
+     <input type="checkbox" id="airport" onClick="display()"><font color="yellow">Airports</font><br>
+     <input type="checkbox" id="way" onclick="display()"><font color="yellow">Waypoints</font><br>
+     <input type="checkbox" id="firdisp" onclick="display()"><font color="yellow">FIRs</font><br>
+     <input type="checkbox" id="aseanbound" onclick="display()"><font color="yellow">ASEAN Boundary</font><br>
+  </div>
+  <script>
+  function aus()
+  {
+    var obj = JSON.parse('{ "aus":[{"lat":"-25.363"},{"long":"131.044"}]}');
+    return obj.aus;
+  }
+  function polygon_fir()
+  {
+    var obj = JSON.parse('{ "poly":[{"a":25.774},{"b":-80.190},{"c":18.466},{"d":-66.118},{"e":32.321},{"f":-64.757}]}');
+    return obj.poly;
+  }
+  function asean_bound()
+  {
+    var obj = JSON.parse('{ "polyline":[{"g":37.772},{"h":-122.214},{"i":21.291},{"j":-157.821},{"k":-18.142},{"l":178.431},{"m":-27.467},{"n":153.027}]}');
+    return obj.polyline;
+  }
+  function display()
+  {
+      var a = document.getElementById("nofilt").checked;
+      var x = document.getElementById("airport").checked;
+      var y = document.getElementById("firdisp").checked;
+      var z = document.getElementById("aseanbound").checked;
+
+      if(x==true && y!=true && z!=true && a!=true)
+      {
+          arr=aus();
+          var x=arr[0].lat;
+          var y=arr[1].long;
+          var myCenter = new google.maps.LatLng(x, y);
+          var mapCanvas = document.getElementById("map");
+          var mapOptions =
+          {
+              center: new google.maps.LatLng(0,-180),
+              zoom: 3,
+              mapTypeId: 'terrain'
+          }
+          var map = new google.maps.Map(mapCanvas, mapOptions);
+          var marker = new google.maps.Marker({position:myCenter});
+          marker.setMap(map);
+        }
+      else if(y==true && x!=true && z!=true && a!=true)
+      {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        arr1=polygon_fir();
+        var a=arr1[0].a;
+        var b=arr1[1].b;
+        var c=arr1[2].c;
+        var d=arr1[3].d;
+        var e=arr1[4].e;
+        var f=arr1[5].f;
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var triangleCoords = [
+           {lat: a, lng: b},
+           {lat: c, lng: d},
+           {lat: e, lng: f},
+           {lat: a, lng: b}
+         ];
+         var bermudaTriangle = new google.maps.Polygon({
+           paths: triangleCoords,
+           strokeColor: '#FF0000',
+           strokeOpacity: 0.8,
+           strokeWeight: 2,
+           fillColor: '#FF0000',
+           fillOpacity: 0.35
+         });
+         bermudaTriangle.setMap(map);
+      }
+      else if(y!=true && x!=true && z==true && a!=true)
+      {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        arr2=asean_bound();
+        var g=arr2[0].g;
+        var h=arr2[1].h;
+        var i=arr2[2].i;
+        var j=arr2[3].j;
+        var k=arr2[4].k;
+        var l=arr2[5].l;
+        var m=arr2[6].m;
+        var n=arr2[7].n;
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var flightPlanCoordinates = [
+             {lat: g, lng: h},
+             {lat: i, lng: j},
+             {lat: k, lng: l},
+             {lat: m, lng: n}
+           ];
+           var flightPath = new google.maps.Polyline({
+             path: flightPlanCoordinates,
+             geodesic: true,
+             strokeColor: '#FF0000',
+             strokeOpacity: 1.0,
+             strokeWeight: 2
+           });
+           flightPath.setMap(map);
+      }
+      else if(x==true && y==true && z!= true && a!=true)
+      {
+        arr=aus();
+        var x=arr[0].lat;
+        var y=arr[1].long;
+        var myCenter = new google.maps.LatLng(x, y);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        arr1=polygon_fir();
+        var a=arr1[0].a;
+        var b=arr1[1].b;
+        var c=arr1[2].c;
+        var d=arr1[3].d;
+        var e=arr1[4].e;
+        var f=arr1[5].f;
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var marker = new google.maps.Marker({position:myCenter});
+        marker.setMap(map);
+        var triangleCoords = [
+           {lat: a, lng: b},
+           {lat: c, lng: d},
+           {lat: e, lng: f},
+           {lat: a, lng: b}
+         ];
+         var bermudaTriangle = new google.maps.Polygon({
+           paths: triangleCoords,
+           strokeColor: '#FF0000',
+           strokeOpacity: 0.8,
+           strokeWeight: 2,
+           fillColor: '#FF0000',
+           fillOpacity: 0.35
+         });
+         bermudaTriangle.setMap(map);
+      }
+      else if(x!=true && y==true && z==true && a!=true)
+      {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        arr1=polygon_fir();
+        var a=arr1[0].a;
+        var b=arr1[1].b;
+        var c=arr1[2].c;
+        var d=arr1[3].d;
+        var e=arr1[4].e;
+        var f=arr1[5].f;
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var triangleCoords = [
+           {lat: a, lng: b},
+           {lat: c, lng: d},
+           {lat: e, lng: f},
+           {lat: a, lng: b}
+         ];
+         var bermudaTriangle = new google.maps.Polygon({
+           paths: triangleCoords,
+           strokeColor: '#FF0000',
+           strokeOpacity: 0.8,
+           strokeWeight: 2,
+           fillColor: '#FF0000',
+           fillOpacity: 0.35
+         });
+         bermudaTriangle.setMap(map);
+         arr2=asean_bound();
+         var g=arr2[0].g;
+         var h=arr2[1].h;
+         var i=arr2[2].i;
+         var j=arr2[3].j;
+         var k=arr2[4].k;
+         var l=arr2[5].l;
+         var m=arr2[6].m;
+         var n=arr2[7].n;
+         var flightPlanCoordinates = [
+              {lat: g, lng: h},
+              {lat: i, lng: j},
+              {lat: k, lng: l},
+              {lat: m, lng: n}
+            ];
+            var flightPath = new google.maps.Polyline({
+              path: flightPlanCoordinates,
+              geodesic: true,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeWeight: 2
+            });
+            flightPath.setMap(map);
+      }
+      else if(x==true && y!=true && z==true && a!=true)
+      {
+        arr=aus();
+        var x=arr[0].lat;
+        var y=arr[1].long;
+        var myCenter = new google.maps.LatLng(x, y);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var marker = new google.maps.Marker({position:myCenter});
+        marker.setMap(map);
+        arr2=asean_bound();
+        var g=arr2[0].g;
+        var h=arr2[1].h;
+        var i=arr2[2].i;
+        var j=arr2[3].j;
+        var k=arr2[4].k;
+        var l=arr2[5].l;
+        var m=arr2[6].m;
+        var n=arr2[7].n;
+        var flightPlanCoordinates = [
+             {lat: g, lng: h},
+             {lat: i, lng: j},
+             {lat: k, lng: l},
+             {lat: m, lng: n}
+           ];
+           var flightPath = new google.maps.Polyline({
+             path: flightPlanCoordinates,
+             geodesic: true,
+             strokeColor: '#FF0000',
+             strokeOpacity: 1.0,
+             strokeWeight: 2
+           });
+           flightPath.setMap(map);
+      }
+	  else if(x==true && y==true && z==true && a!=true)
+	  {
+        arr=aus();
+        var x=arr[0].lat;
+        var y=arr[1].long;
+        var myCenter = new google.maps.LatLng(x, y);
+        var mapCanvas = document.getElementById("map");
+        var mapOptions =
+        {
+            center: new google.maps.LatLng(0,-180),
+            zoom: 3,
+            mapTypeId: 'terrain'
+        }
+        arr1=polygon_fir();
+        var a=arr1[0].a;
+        var b=arr1[1].b;
+        var c=arr1[2].c;
+        var d=arr1[3].d;
+        var e=arr1[4].e;
+        var f=arr1[5].f;
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var marker = new google.maps.Marker({position:myCenter});
+        marker.setMap(map);
+        var triangleCoords = [
+           {lat: a, lng: b},
+           {lat: c, lng: d},
+           {lat: e, lng: f},
+           {lat: a, lng: b}
+         ];
+         var bermudaTriangle = new google.maps.Polygon({
+           paths: triangleCoords,
+           strokeColor: '#FF0000',
+           strokeOpacity: 0.8,
+           strokeWeight: 2,
+           fillColor: '#FF0000',
+           fillOpacity: 0.35
+         });
+         bermudaTriangle.setMap(map);
+         arr2=asean_bound();
+         var g=arr2[0].g;
+         var h=arr2[1].h;
+         var i=arr2[2].i;
+         var j=arr2[3].j;
+         var k=arr2[4].k;
+         var l=arr2[5].l;
+         var m=arr2[6].m;
+         var n=arr2[7].n;
+         var flightPlanCoordinates = [
+              {lat: g, lng: h},
+              {lat: i, lng: j},
+              {lat: k, lng: l},
+              {lat: m, lng: n}
+            ];
+           var flightPath = new google.maps.Polyline({
+             path: flightPlanCoordinates,
+             geodesic: true,
+             strokeColor: '#FF0000',
+             strokeOpacity: 1.0,
+             strokeWeight: 2
+           });
+           flightPath.setMap(map);
+	  }
+      else
+      {
+        myMap();
+      }
+  }
+  </script>
+ </div>
+</div>
+  <div class="bottom-left">
+  <font color="yellow"><center>STATISTICS:</center></font>
+</div>
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+
+</body>
+</html>

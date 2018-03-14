@@ -1,0 +1,33 @@
+function getFIRs() //A list of Firs
+{
+var obj = JSON.parse('{ "firs":["RPHI", "VDPP"]}');
+return document.getElementById("select").innerHTML = obj.firs;
+}
+
+function getoriginAirports()// A list of Origin Airports
+{
+var obj = JSON.parse('{ "originairports":["Singapore", "China"]}');
+return document.getElementById("ori").innerHTML = obj.originairports;
+}
+
+function getdestAirports()// A list of Destination Airports
+{
+var obj = JSON.parse('{ "destairports":["Singapore", "China"]}');
+return document.getElementById("dest").innerHTML = obj.destairports;
+}
+
+function aus()// A function for "Australia" that stores the lat and long to display a marker on the map
+{
+  var obj = JSON.parse('{ "aus":[{"lat":"-25.363"},{"long":"131.044"}]}');
+  return obj.aus;
+}
+function polygon_fir()// Stores co-ordinates of a sample polygon for FIR region
+{
+  var obj = JSON.parse('{ "poly":[{"a":25.774},{"b":-80.190},{"c":18.466},{"d":-66.118},{"e":32.321},{"f":-64.757}]}');
+  return obj.poly;
+}
+function asean_bound()// Stores the co-ordinates of a sample polyline for the asean boundary
+{
+  var obj = JSON.parse('{ "polyline":[{"g":37.772},{"h":-122.214},{"i":21.291},{"j":-157.821},{"k":-18.142},{"l":178.431},{"m":-27.467},{"n":153.027}]}');
+  return obj.polyline;
+}
