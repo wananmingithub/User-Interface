@@ -4,6 +4,13 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="css/nav.css">
+<link rel="stylesheet" type="text/css" href="font/iconfont.css">
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/nav.js"></script>
+
 <style>
 .container {
     position: relative;
@@ -12,7 +19,13 @@
 }
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background: #000;
+  border: 0;
+  position: relative;
+  height: 52px;
+  font-family: "Open Sans";
+  color: white;
+  font-size:14px;
 }
 
 .topnav a {
@@ -21,7 +34,7 @@
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .topnav a:hover {
@@ -37,31 +50,33 @@
     position: absolute;
     top: 80px;
     right: 16px;
-    width: 150px;
-    height: 100px;
-    padding: 15px;
-    background-color: black;
-    box-shadow: 10px 10px 100px grey;
+	z-index: 1000;
+    margin-top: 12px;
+    background: rgba(0,0,0,0.59);
+    color: #f8c023;
+    font-family: "Roboto Condensed";
+    font-weight: 400;
 }
-.bottom-left {
-    position: absolute;
-    bottom: 80px;
-    left: 16px;
-    width: 300px;
-    height: 100px;
-    padding: 15px;
-    background-color: black;
-    box-shadow: 10px 10px 100px grey;
-}
+
 html{
     width:100%;
     height:100%;
 	}
 body {
-    font-family: "Lato", sans-serif;
-	width:100%;
-    height:100%;
-    background-color:#DDD;
+    text-rendering: optimizeSpeed;
+    height: 100% !important;
+    width: 100% !important;
+    min-width: 320px;
+    min-height: 264px;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    font: normal 14px Helvetica Neue, Arial, sans-serif;
+    color: #333;
+    background: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
 }
 .hide {
   display: none;
@@ -69,18 +84,20 @@ body {
 p {
   font-weight: bold;
 }
+
 .sidenav {
     height: 100%;
-    width: 0;
+    width: 20%;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 52px;
     left: 0;
     background-color:black;
 	color:#808080;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+	flex: 1;
 }
 
 .sidenav a {
@@ -108,7 +125,8 @@ p {
     transition: margin-left .5s;
     padding: 16px
 	background-color:black;
-
+	display: flex;
+	flex-direction: row
 }
 
 @media screen and (max-height: 450px) {
@@ -153,6 +171,7 @@ function show6(){
   document.getElementById('div5').style.display ='none';
 }
 </script>
+
 <script type="text/javascript">
 tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
 tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
@@ -179,6 +198,7 @@ setInterval(GetClock,1000);
 }
 </script>
 </head>
+
 <body>
   <div class="topnav">
   <a class="active" href="#home">Home</a>
@@ -186,36 +206,52 @@ setInterval(GetClock,1000);
   <a href="#contact">Flight Statistics</a>
   <a href="#login"> Login <i class="fa fa-user-o"></i></a>
   <a href="#settings"> Settings <i style="font-size:15px" class="fa">&#xf013;</i></a>
-</div>
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
- </span><font color="Yellow">Time Window</font></span>
-	<form action="#" class="ws-validate">
-      From:
-      <div class="form-row">
-          <input type="date" data-date-size="4" />
-      </div>
-	</form>
-	<form action="#" class="ws-validate">
-      To:
-      <div class="form-row">
-          <input type="date" data-date-size="4" />
-      </div>
-	</form>
-	<br>
-	<hr>
-	</span><font color="Yellow">FIR Filter</font></span>
-	<br>
-  <input type="radio" name="geoloc" value="asean" checked onclick="show6();"  />
-	ASEAN <br>
-	<input type="radio" name="geoloc" value="fir" onclick="show5();" />
-	FIR <br>
-  <div id="div5" class="hide">
-    Select FIR:
-            <select id="select">
-                <option value="default">default</option>
-            </select>
-            <script>
+  <div style="float:right;font-style:white;text-align:center" id="clockbox"></div>
+  </div>
+
+  <div class="container">
+    <div id="main">
+
+
+
+
+<div class="nav" style="flex:1">
+	<div class="nav-top">
+		<div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="images/mini.png" ></div>
+	</div>
+	<ul>
+		<li class="nav-item">
+			<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>Time Window</span><i class="my-icon nav-more"></i></a>
+			<ul style="text-align:center;">				
+	            <form action="#" class="ws-validate">
+                From:
+                <div class="form-row">
+                  <input type="date" data-date-size="4" />
+                </div>
+	            </form>
+	            <form action="#" class="ws-validate">
+                To:
+                <div class="form-row">
+                <input type="date" data-date-size="4" />
+                </div>
+	            </form>
+			</ul>
+		</li>
+		<li class="nav-item">
+			<a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>FIR Filter</span><i class="my-icon nav-more"></i></a>
+			<ul style="text-align:center;">
+				
+	            <br>
+                <input type="radio" name="geoloc" value="asean" checked onclick="show6();"  />
+	            ASEAN <br>
+	            <input type="radio" name="geoloc" value="fir" onclick="show5();" />
+	            FIR <br>
+                <div id="div5" class="hide">
+                Select FIR:
+                <select id="select">
+                  <option value="default">default</option>
+                </select>
+                <script>
                 function getFIRs()
     			{
     				var obj = JSON.parse('{ "firs":["RPHI", "VDPP"]}');
@@ -223,46 +259,51 @@ setInterval(GetClock,1000);
     			}
                 var select = document.getElementById("select"),
                 arr = getFIRs();
-                 for(var i = 0; i < arr.length; i++)
+                for(var i = 0; i < arr.length; i++)
                  {
                      var option = document.createElement("OPTION"),
-                         txt = document.createTextNode(arr[i]);
+                     txt = document.createTextNode(arr[i]);
                      option.appendChild(txt);
                      option.setAttribute("value",arr[i]);
                      select.insertBefore(option,select.lastChild);
                  }
-            </script>
-	</div>
-  <div id="div6" class="hide">
-	</div>
-    <br>
-    <br>
-	<hr>
-    </span><font color="Yellow">Track Data Source</font></span><br>
-    <select name="track">
-      <option value="flightplan">FLIGHT PLAN</option>
-      <option value="adsb">ADSB</option>
-    </select>
-    <br>
-    <br>
-	<hr>
-    <p></span><font color="Yellow">Airport Filter</font></span></p>
-	<input type="radio" name="loc" value="one" checked onclick="show();"  />
-	None <br>
-	<input type="radio" name="loc" value="ori" onclick="show1();" />
-	Origin Only <br>
-	<input type="radio" name="loc" value="dest" onclick="show2();" />
-	Destination Only<br>
-	<input type="radio" name="loc" value="oneway" onclick="show3();" />
-	Origin to Destination(Oneway)<br>
-	<input type="radio" name="loc" value="twoway" onclick="show4();" />
-	Both ways<br>
-	<div id="div1" class="hide">
-    Select Origin Airport:<br>
-    		<select id="ori">
-                <option value="default">default</option>
-            </select>
-            <script>
+                 </script>
+	             </div>
+                 <div id="div6" class="hide">
+	             </div>
+			</ul>
+		</li>
+		
+		<li class="nav-item">
+			<a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span>Track Data Source</span><i class="my-icon nav-more"></i></a>
+			<ul style="text-align:center;">
+                 <select name="track">
+                 <option value="flightplan">FLIGHT PLAN</option>
+                 <option value="adsb">ADSB</option>
+				 </select>
+			</ul>
+		</li>
+		
+		<li class="nav-item">
+			<a href="javascript:;"><i class="my-icon nav-icon icon_4"></i><span>Airport Filter</span><i class="my-icon nav-more"></i></a>
+			<ul style="text-align:center;">
+			
+	            <input type="radio" name="loc" value="one" checked onclick="show();"  />
+	            None <br>
+	            <input type="radio" name="loc" value="ori" onclick="show1();" />
+	            Origin Only <br>
+	            <input type="radio" name="loc" value="dest" onclick="show2();" />
+	            Destination Only<br>
+	            <input type="radio" name="loc" value="oneway" onclick="show3();" />
+	            Origin to Destination(Oneway)<br>
+	            <input type="radio" name="loc" value="twoway" onclick="show4();" />
+	            Both ways<br>
+	            <div id="div1" class="hide">
+                  Select Origin Airport:<br>
+    		    <select id="ori">
+                  <option value="default">default</option>
+                </select>
+                <script>
                 function getoriginAirports()
     			{
     				var obj = JSON.parse('{ "originairports":["Singapore", "China"]}');
@@ -278,42 +319,37 @@ setInterval(GetClock,1000);
                      option.setAttribute("value",arr[i]);
                      select.insertBefore(option,select.lastChild);
                  }
-            </script>
-	</div>
-	<div id="div2" class="hide">
-    Select Destination Airport:<br>
-        <select id="dest">
-                <option value="default">default</option>
-            </select>
-            <script>
+                </script>
+	            </div>
+	            <div id="div2" class="hide">
+                Select Destination Airport:<br>
+                <select id="dest">
+                  <option value="default">default</option>
+                </select>
+                <script>
                 function getdestAirports()
-          {
-            var obj = JSON.parse('{ "destairports":["Singapore", "China"]}');
-            return document.getElementById("dest").innerHTML = obj.destairports;
-          }
-                var select = document.getElementById("dest"),
-                arr = getdestAirports();
-                 for(var i = 0; i < arr.length; i++)
-                 {
-                     var option = document.createElement("OPTION"),
-                         txt = document.createTextNode(arr[i]);
-                     option.appendChild(txt);
-                     option.setAttribute("value",arr[i]);
-                     select.insertBefore(option,select.lastChild);
+                {
+                  var obj = JSON.parse('{ "destairports":["Singapore", "China"]}');
+                  return document.getElementById("dest").innerHTML = obj.destairports;
+                }
+                  var select = document.getElementById("dest"),
+                  arr = getdestAirports();
+                  for(var i = 0; i < arr.length; i++)
+                {
+                  var option = document.createElement("OPTION"),
+                      txt = document.createTextNode(arr[i]);
+                      option.appendChild(txt);
+                      option.setAttribute("value",arr[i]);
+                      select.insertBefore(option,select.lastChild);
                  }
-            </script>
-	</div>
-    <br>
-    <br><p align="right">
-    <button type="Submit"> Submit</button> </p>
-    <br>
-    <br>
+                </script>
+	            </div>
+			</ul>
+		</li>
+	</ul>
 </div>
-<div class="container">
-  <div id="main">
-  <span style="font-size:30px;cursor:pointer;colour:white" onclick="openNav()">&#9776;<span style="color:orange">&#9992;</span><font color="Yellow">ATMRI </font><font color="Orange">F</font><font color="Yellow">light </font><font color="orange">D</font><font color="Yellow">ata</font><font color="orange"> I</font><font color="Yellow">ntelligence</font></span>
-<div style="float:right;" id="clockbox"></div>
-  <div id="map" style="width:100%;height:900px;background:white"></div>
+
+ <div id="map" style="width:100%;height:900px;background:white;flex:6;"></div>
 	<script>
     function myMap() {
     var mapOptions = {
@@ -322,10 +358,10 @@ setInterval(GetClock,1000);
         mapTypeId: 'terrain'
     }
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
+    }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn6NQemQCGuH6xOFLrSHp8oS5LQ-p4NXk&callback=myMap"></script>
-</div>
+  </div>
   <div class="top-right">
      <input type="checkbox" id="nofilt" onClick="display()"><font color="yellow">None</font><br>
      <input type="checkbox" id="airport" onClick="display()"><font color="yellow">Airports</font><br>
