@@ -30,9 +30,9 @@
 
 .topnav a {
   float: left;
-  color: #f2f2f2;
+  color: #999;
   text-align: center;
-  padding: 14px 16px;
+  padding: 17px 15px 15px;;
   text-decoration: none;
   font-size: 14px;
 }
@@ -46,6 +46,19 @@
   background-color: #4CAF50;
   color: white;
 }
+
+#clockbox {
+    color: #b7b7b7;
+    font-size: 14px;
+    font-family: 'Roboto Condensed';
+    font-weight: 400;
+    top: 0;
+    height: 49px;
+    line-height: 49px;
+    position: absolute;
+    right: 20px;
+}
+
 .top-right {
     position: absolute;
     top: 80px;
@@ -53,9 +66,14 @@
 	z-index: 1000;
     margin-top: 12px;
     background: rgba(0,0,0,0.59);
-    color: #f8c023;
+	background-color: transparent;
     font-family: "Roboto Condensed";
-    font-weight: 400;
+	margin-left: 25px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    display: block;
+	font-weight:normal;
+	font-color:white;
 }
 
 html{
@@ -85,42 +103,6 @@ p {
   font-weight: bold;
 }
 
-.sidenav {
-    height: 100%;
-    width: 20%;
-    position: fixed;
-    z-index: 1;
-    top: 52px;
-    left: 0;
-    background-color:black;
-	color:#808080;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-	flex: 1;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right:0;
-    font-size: 36px;
-    margin-left: 10px;
-}
-
 #main {
     transition: margin-left .5s;
     padding: 16px
@@ -132,6 +114,31 @@ p {
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.choiceTitle {
+    line-height: 12px;
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    color: #f8c023;
+    font-family: "Roboto Condensed";
+    font-weight: 400;
+    font-size: 1.05em;
+    text-transform: uppercase;
+}
+
+.nav a{
+    font-size: 0.9em;
+    width: 100%;
+    height: 35px;
+    color: #bbb;
+    font-weight: normal;
+    padding: 0 0 0 12px;
+    line-height: 33px;
+    display: block;
+    position: relative;
+    background: #222121;
 }
 </style>
 <script>
@@ -206,7 +213,7 @@ setInterval(GetClock,1000);
   <a href="#contact">Flight Statistics</a>
   <a href="#login"> Login <i class="fa fa-user-o"></i></a>
   <a href="#settings"> Settings <i style="font-size:15px" class="fa">&#xf013;</i></a>
-  <div style="float:right;font-style:white;text-align:center" id="clockbox"></div>
+  <div id="clockbox"></div>
   </div>
 
   <div class="container">
@@ -216,12 +223,14 @@ setInterval(GetClock,1000);
 
 
 <div class="nav" style="flex:1">
-	<div class="nav-top">
+	<!--
+	    <div class="nav-top">
 		<div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="images/mini.png" ></div>
 	</div>
-	<ul>
+	-->
+	<ul >
 		<li class="nav-item">
-			<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>Time Window</span><i class="my-icon nav-more"></i></a>
+			<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span class="choiceTitle">Time Window</span><i class="my-icon nav-more"></i></a>
 			<ul style="text-align:center;">				
 	            <form action="#" class="ws-validate">
                 From:
@@ -238,7 +247,7 @@ setInterval(GetClock,1000);
 			</ul>
 		</li>
 		<li class="nav-item">
-			<a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>FIR Filter</span><i class="my-icon nav-more"></i></a>
+			<a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span class="choiceTitle">FIR Filter</span><i class="my-icon nav-more"></i></a>
 			<ul style="text-align:center;">
 				
 	            <br>
@@ -275,7 +284,7 @@ setInterval(GetClock,1000);
 		</li>
 		
 		<li class="nav-item">
-			<a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span>Track Data Source</span><i class="my-icon nav-more"></i></a>
+			<a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span class="choiceTitle">Track Data Source</span><i class="my-icon nav-more"></i></a>
 			<ul style="text-align:center;">
                  <select name="track">
                  <option value="flightplan">FLIGHT PLAN</option>
@@ -285,7 +294,7 @@ setInterval(GetClock,1000);
 		</li>
 		
 		<li class="nav-item">
-			<a href="javascript:;"><i class="my-icon nav-icon icon_4"></i><span>Airport Filter</span><i class="my-icon nav-more"></i></a>
+			<a href="javascript:;"><i class="my-icon nav-icon icon_4"></i><span class="choiceTitle">Airport Filter</span><i class="my-icon nav-more"></i></a>
 			<ul style="text-align:center;">
 			
 	            <input type="radio" name="loc" value="one" checked onclick="show();"  />
@@ -355,19 +364,99 @@ setInterval(GetClock,1000);
     var mapOptions = {
         center: new google.maps.LatLng(0,-180),
         zoom: 3,
-        mapTypeId: 'terrain'
+        mapTypeId: 'terrain',
+		styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
     }
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions,);
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn6NQemQCGuH6xOFLrSHp8oS5LQ-p4NXk&callback=myMap"></script>
   </div>
   <div class="top-right">
-     <input type="checkbox" id="nofilt" onClick="display()"><font color="yellow">None</font><br>
-     <input type="checkbox" id="airport" onClick="display()"><font color="yellow">Airports</font><br>
-     <input type="checkbox" id="way" onclick="display()"><font color="yellow">Waypoints</font><br>
-     <input type="checkbox" id="firdisp" onclick="display()"><font color="yellow">FIRs</font><br>
-     <input type="checkbox" id="aseanbound" onclick="display()"><font color="yellow">ASEAN Boundary</font><br>
+     <input type="checkbox" id="nofilt" onClick="display()"><font >None</font><br>
+     <input type="checkbox" id="airport" onClick="display()"><font >Airports</font><br>
+     <input type="checkbox" id="way" onclick="display()"><font >Waypoints</font><br>
+     <input type="checkbox" id="firdisp" onclick="display()"><font >FIRs</font><br>
+     <input type="checkbox" id="aseanbound" onclick="display()"><font >ASEAN Boundary</font><br>
   </div>
   <script>
   function aus()
